@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<meta name="theme-color" content="#a72703"/>
+<title>NutriVision - Your Nutrition Ledger</title>
+<link rel="manifest" href="manifest.json"/>
+<link rel="apple-touch-icon" href="icons/icon-180.png"/>
+<link rel="icon" href="icons/icon-32.png"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;700&family=Space+Grotesk:wght@500;600;700&family=Work+Sans:wght@400;500;600&family=Special+Elite&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "on-primary-container": "#ffbfb0","on-primary": "#ffffff","on-tertiary-container": "#ffc28c",
+          "on-secondary-fixed-variant": "#3b4d14","on-tertiary-fixed": "#2d1600","outline-variant": "#e2bfb6",
+          "error": "#ba1a1a","surface": "#fff8ef","on-background": "#221b00","surface-tint": "#b12e0a",
+          "on-primary-fixed": "#3c0700","surface-container-high": "#ffe797","surface-bright": "#fff8ef",
+          "secondary": "#52652a","on-surface-variant": "#5a413b","primary-fixed": "#ffdad2",
+          "surface-variant": "#f9e192","secondary-container": "#d4eca2","tertiary-container": "#834900",
+          "primary": "#7e1a00","on-tertiary-fixed-variant": "#6b3b00","tertiary": "#623500",
+          "on-tertiary": "#ffffff","surface-dim": "#f0d98a","on-error": "#ffffff","on-surface": "#221b00",
+          "background": "#fff8ef","surface-container-highest": "#f9e192","on-secondary-fixed": "#141f00",
+          "primary-container": "#a72703","surface-container-low": "#fff3d3","on-primary-fixed-variant": "#8a1d00",
+          "primary-fixed-dim": "#ffb4a2","error-container": "#ffdad6","outline": "#8e7069",
+          "surface-container": "#ffedb6","secondary-fixed": "#d4eca2","inverse-on-surface": "#fff0c5",
+          "tertiary-fixed": "#ffdcc0","inverse-primary": "#ffb4a2","on-secondary-container": "#576b2f",
+          "inverse-surface": "#3b2f00","tertiary-fixed-dim": "#ffb876","on-secondary": "#ffffff",
+          "on-error-container": "#93000a","surface-container-lowest": "#ffffff","secondary-fixed-dim": "#b8cf88"
+        },
+        borderRadius: { DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px" },
+        spacing: { unit: "8px", "container-margin": "24px", "card-padding": "20px", gutter: "16px" },
+        fontFamily: {
+          "display-lg-mobile": ["Libre Caslon Text"], "price-tag": ["Space Grotesk"],
+          "headline-md": ["Libre Caslon Text"], "body-main": ["Work Sans"],
+          "display-lg": ["Libre Caslon Text"], "label-caps": ["Space Grotesk"],
+          "typewriter": ["Special Elite", "monospace"]
+        },
+        fontSize: {
+          "display-lg-mobile": ["36px", {lineHeight:"42px", fontWeight:"700"}],
+          "price-tag": ["20px", {lineHeight:"20px", fontWeight:"700"}],
+          "headline-md": ["28px", {lineHeight:"36px", fontWeight:"600"}],
+          "body-main": ["16px", {lineHeight:"24px", fontWeight:"400"}],
+          "display-lg": ["48px", {lineHeight:"56px", letterSpacing:"-0.02em", fontWeight:"700"}],
+          "label-caps": ["12px", {lineHeight:"16px", letterSpacing:"0.08em", fontWeight:"600"}]
+        }
+      }
+    }
+  }
+</script>
+<link rel="stylesheet" href="styles.css"/>
+</head>
+<body class="min-h-screen pb-24">
+
+<!-- Top AppBar -->
+<header class="w-full top-0 sticky z-50 bg-surface-container-high border-b-2 border-outline-variant shadow-[2px_2px_0px_0px_rgba(0,0,0,0.1)] h-16 flex items-center justify-between px-6">
+  <div class="flex items-center gap-3">
+    <img alt="NutriVision Logo" class="h-10 w-10 object-contain rounded" src="icons/icon-192.png"/>
+    <h1 class="font-display-lg-mobile text-2xl text-primary-container hidden sm:block">NutriVision</h1>
+  </div>
+  <div class="flex items-center gap-2">
+    <span id="today-label" class="font-label-caps text-[11px] text-on-surface-variant uppercase tracking-widest"></span>
+    <button id="goal-btn" class="material-symbols-outlined text-primary p-2 active:translate-y-0.5 transition-transform" title="Edit daily goal">settings</button>
+  </div>
+</header>
+
+<main id="app" class="max-w-[1140px] mx-auto px-container-margin py-6"></main>
+
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 w-full z-50 bg-surface-container-high border-t-2 border-outline-variant shadow-[0_-2px_0px_0px_rgba(0,0,0,0.05)] flex justify-around items-center px-2 py-3 pb-safe">
+  <button data-route="home" class="nav-btn flex flex-col items-center justify-center p-2 rounded-xl active:scale-95 transition-all duration-150">
+    <span class="material-symbols-outlined">home</span>
+    <span class="font-label-caps text-[10px]">Home</span>
+  </button>
+  <button data-route="scan" class="nav-btn flex flex-col items-center justify-center p-2 rounded-xl active:scale-95 transition-all duration-150">
+    <span class="material-symbols-outlined">photo_camera</span>
+    <span class="font-label-caps text-[10px]">Scan</span>
+  </button>
+  <button data-route="upload" class="nav-btn flex flex-col items-center justify-center p-2 rounded-xl active:scale-95 transition-all duration-150">
+    <span class="material-symbols-outlined">cloud_upload</span>
+    <span class="font-label-caps text-[10px]">Gallery</span>
+  </button>
+  <button data-route="journal" class="nav-btn flex flex-col items-center justify-center p-2 rounded-xl active:scale-95 transition-all duration-150">
+    <span class="material-symbols-outlined">menu_book</span>
+    <span class="font-label-caps text-[10px]">Journal</span>
+  </button>
+  <button data-route="planning" class="nav-btn flex flex-col items-center justify-center p-2 rounded-xl active:scale-95 transition-all duration-150">
+    <span class="material-symbols-outlined">checklist</span>
+    <span class="font-label-caps text-[10px]">Planning</span>
+  </button>
+</nav>
+
+<div class="fixed top-0 left-0 w-full h-full pointer-events-none opacity-[0.03] z-[100]" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22><rect width=%2260%22 height=%2260%22 fill=%22none%22/><path d=%22M0 30h60%22 stroke=%22%23000%22 stroke-width=%221%22/></svg>');"></div>
+
+<!-- Toast -->
+<div id="toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface font-label-caps text-xs px-4 py-2 rounded-lg shadow-lg opacity-0 pointer-events-none transition-opacity duration-300 z-[200]"></div>
+
+<template id="tpl-modal">
+  <div class="modal-backdrop fixed inset-0 bg-black/40 z-[150] flex items-end sm:items-center justify-center">
+    <div class="modal-box retro-card bg-surface-container-lowest rounded-t-xl sm:rounded-xl w-full sm:max-w-md p-card-padding max-h-[85vh] overflow-y-auto"></div>
+  </div>
+</template>
+
+<script src="app.js"></script>
+</body>
+</html>
